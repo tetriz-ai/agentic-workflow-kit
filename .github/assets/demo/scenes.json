@@ -1,0 +1,134 @@
+{
+  "accent": "#805332",
+  "disclosure": "Illustrated pagination scenario \u00b7 hooks replayed locally \u00b7 model findings vary",
+  "scenes": [
+    {
+      "title": "Five commits. One missed edge case.",
+      "blocks": [
+        {
+          "label": "BUILD",
+          "rows": [
+            "Plan the change",
+            "Write code",
+            "Commit 1 \u00b7 2 \u00b7 3 \u00b7 4 \u00b7 5"
+          ],
+          "box": [
+            36,
+            151,
+            488,
+            413
+          ],
+          "kind": "steps"
+        },
+        {
+          "label": "PAGINATION",
+          "rows": [
+            "return total // size",
+            "",
+            "last_page(10, 3) = 3",
+            {
+              "text": "Expected: 4 pages",
+              "color": "#ffb5a9"
+            }
+          ],
+          "box": [
+            576,
+            151,
+            488,
+            413
+          ],
+          "kind": "code"
+        }
+      ],
+      "arrows": []
+    },
+    {
+      "title": "Fresh reviewers catch it while you work.",
+      "blocks": [
+        {
+          "label": "AUTOMATIC CADENCE",
+          "rows": [
+            {
+              "text": "5 commits reached",
+              "state": "accent"
+            },
+            "Hook nudges the agent",
+            "/review:review-panel"
+          ],
+          "box": [
+            36,
+            151,
+            488,
+            413
+          ],
+          "kind": "rows"
+        },
+        {
+          "label": "RECORDED FINDING",
+          "rows": [
+            {
+              "text": "Important \u00b7 correctness",
+              "state": "bad"
+            },
+            "Partial last page is lost",
+            "10 items / 3 per page needs 4"
+          ],
+          "box": [
+            576,
+            151,
+            488,
+            413
+          ],
+          "kind": "rows"
+        }
+      ],
+      "arrows": []
+    },
+    {
+      "title": "Fix the edge case. Continue shipping.",
+      "blocks": [
+        {
+          "label": "MANUAL / AGENT FIX",
+          "rows": [
+            {
+              "text": "- return total // size",
+              "color": "#ffb5a9"
+            },
+            {
+              "text": "+ return -(-total // size)",
+              "color": "#9ce0bb"
+            },
+            "",
+            "last_page(10, 3) = 4"
+          ],
+          "box": [
+            36,
+            151,
+            488,
+            413
+          ],
+          "kind": "code",
+          "size": 21
+        },
+        {
+          "label": "DELIVERY WORKFLOW",
+          "rows": [
+            "Fix Important findings",
+            "Review with a second model",
+            "Open a reviewed PR"
+          ],
+          "box": [
+            576,
+            151,
+            488,
+            413
+          ],
+          "kind": "steps"
+        }
+      ],
+      "arrows": []
+    }
+  ],
+  "name": "agentic-workflow-kit",
+  "output": "demo.gif"
+}

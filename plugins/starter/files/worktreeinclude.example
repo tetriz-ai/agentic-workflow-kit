@@ -1,0 +1,10 @@
+# Local, untracked files a new git worktree needs to run, copied from the main checkout by the
+# worktrees plugin (its worktree-hydrate.sh, run by its EnterWorktree hook and the starter's
+# post-checkout githook). One rule per line:
+#   required <path>   a file the worktree cannot run without (missing ones are reported)
+#   optional <path>   copied when present
+# A path is a literal file or a folder ending in /** (copied whole). Paths must stay inside the
+# repo. Heavy dependency folders (node_modules, a Python .venv) do not belong here: install
+# them in the worktree instead.
+optional .env
+optional .env.local

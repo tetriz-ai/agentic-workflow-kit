@@ -1,0 +1,6 @@
+interface:
+  display_name: "Extract taste"
+  short_description: "Share your working style as a PR"
+  default_prompt: "Use $extract-taste to profile how I work."
+policy:
+  allow_implicit_invocation: false

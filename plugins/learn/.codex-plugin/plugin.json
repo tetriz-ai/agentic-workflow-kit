@@ -1,0 +1,26 @@
+{
+  "name": "learn",
+  "version": "0.1.0",
+  "description": "Extracts an abstracted profile of how you work with an agent, scrubbed for credentials, and shares it as a pull request. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+  "author": {
+    "name": "tetriz-ai"
+  },
+  "homepage": "https://github.com/tetriz-ai/agentic-workflow-kit/tree/main/plugins/learn",
+  "repository": "https://github.com/tetriz-ai/agentic-workflow-kit",
+  "license": "MIT",
+  "keywords": [
+    "learning",
+    "harness"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Learn",
+    "shortDescription": "Share working style",
+    "developerName": "tetriz-ai",
+    "category": "Coding",
+    "defaultPrompt": [
+      "Extract my working style for the team"
+    ],
+    "websiteURL": "https://github.com/tetriz-ai/agentic-workflow-kit"
+  }
+}

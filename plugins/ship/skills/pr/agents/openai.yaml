@@ -1,0 +1,6 @@
+interface:
+  display_name: "Open a PR"
+  short_description: "Open or update a pull request for this branch"
+  default_prompt: "Use $pr to open a pull request for this branch."
+policy:
+  allow_implicit_invocation: false

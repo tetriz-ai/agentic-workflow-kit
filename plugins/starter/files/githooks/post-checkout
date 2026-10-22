@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Copyright 2026 The agentic-workflow-kit Authors
+# SPDX-License-Identifier: MIT
+#
+# git post-checkout hook from the agentic-workflow-kit starter. Install it as the
+# repo's post-checkout hook (`/starter:setup` offers to).
+#
+# Fires after `git worktree add` (git runs post-checkout in the new worktree, cwd =
+# the new worktree) AND on every branch or file checkout. It acts ONLY for a
+# freshly created linked worktree and hydrates it with the local, git-ignored files
+# it needs to run, copied from the main checkout per .worktreeinclude, using the
+# worktrees plugin's worktree-hydrate.sh. That script is idempotent and non-fatal.
+#
+# The script is found at AGENTIC_KIT_WORKTREES_DIR/scripts/worktree-hydrate.sh when
+# that is set, else in the newest installed copy of this marketplace's worktrees plugin.
+#
+# Args (git): $1 = prev HEAD, $2 = new HEAD, $3 = branch-checkout flag (1/0).
+set -uo pipefail
+
+branch_flag="${3:-0}"
+# Only branch checkouts (which is what `git worktree add` performs).
+[ "$branch_flag" = "1" ] || exit 0
+# A worktree's first checkout passes an all-zero prev-HEAD; an ordinary branch switch
+# passes a real one, so a routine checkout never re-copies a file the developer
+# deleted on purpose.
+case "${1:-}" in *[!0]*) exit 0 ;; esac
+
+hydrate=""
+if [ -n "${AGENTIC_KIT_WORKTREES_DIR:-}" ]; then
+  hydrate="$AGENTIC_KIT_WORKTREES_DIR/scripts/worktree-hydrate.sh"
+else
+  newest=0
+  for cand in "$HOME"/.claude/plugins/cache/agentic-workflow-kit/worktrees/*/scripts/worktree-hydrate.sh; do
+    [ -f "$cand" ] || continue
+    m=$(stat -c %Y "$cand" 2>/dev/null || stat -f %m "$cand" 2>/dev/null || echo 0)
+    if [ "$m" -gt "$newest" ]; then newest="$m"; hydrate="$cand"; fi
+  done
+fi
+[ -n "$hydrate" ] && [ -f "$hydrate" ] || exit 0
+
+bash "$hydrate" "$PWD" || true
+exit 0

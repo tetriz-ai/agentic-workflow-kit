@@ -1,0 +1,43 @@
+# The RFC-ready bar — the shared readability + grounding rubric
+
+The single grading sheet for RFC **substance, structure, and grounding** — the quality bar that turns "a human is the first reader to catch this" into "an earlier automated pass caught it." Two skills grade against this one file so the bar cannot drift:
+
+- **`/plan:tech-design-doc-writing`** — the write-time per-section self-gate (SKILL.md → "The Decision Workflow", step 6, "Self-gate the section") grades each just-drafted section against this before moving on.
+- **`/plan:tech-design-doc-review`** — the fresh-reader panel phase grades the finished doc against this, section by section, and the per-section Review hooks in `sections/*.md` carry the section-specific slices of it.
+
+**The governing principle: the human is the *last* reader, not the first.** If a human is adding a readability or grounding comment on an RFC, an earlier pass here failed. That is the bar to design against — not "did the author try," but "would this comment still be needed."
+
+This is the *substance/structure/grounding* layer. Its companion is the *surface* layer — the Prose-register check (no arrow glyphs, semicolon run-ons, telegraphic fragments, `§`-pepper, in-doc process citations, harness/skill jargon), which lives in the writing SKILL.md "Prose register" block and the review skill's Family-3 Prose-register hook. Grammatically-clean prose passes the surface layer and still fails this one; grade both.
+
+## The bar (grade each item per section)
+
+Each line is a *fresh-reader* or *grounding* failure. A "yes, this fires" is a WARN (a grounding miss on an ownership/schema/type claim is the acute one — it ships a *false* fact, not just dense prose).
+
+### Cold-read comprehension — could a new engineer restate this?
+- **Mental model before mechanism.** A paragraph that assumes the author's mental model, or uses a term before it is defined, fails — state the model first, define the term at first use. The test is literal: read the section as an engineer who did not write it and has not seen the rest of the doc, and try to restate the fattest paragraph. If you cannot, it fails — even when every sentence is grammatical. Apply the restate-test to a **lone compressed sentence** too, not only a fat paragraph — a single cryptic line inside an otherwise-clear paragraph ("the dirty set is the fresh misses", "the noted future hardening") fails on its own.
+- **One paragraph, one load of claims.** A paragraph carrying **3+ distinct claims** must become a bulleted list. Compressed noun-stacks (three nouns chained into shorthand) are the tell.
+- **A rule spanning multiple actors, scopes, or a lifecycle carries a worked example with named entities.** The general statement is necessary and, on its own, routinely insufficient — a reader cannot tell which case it decides. Walk one concrete instance with names: *buyer B places one order that combines C1's and C2's requests, and C1 and C2 sit on different teams; the order counts in B's team, and C1 and C2 see their requests through the drill-down.* Same for a placement table (one example per row, with real identifiers) and any multi-step derivation (walk the steps once, end to end). State the general form too — the example replaces nothing, it makes the general form legible.
+
+### Structure — the shape carries the meaning
+- **The markdown renders as authored.** Adjacent lines with no blank line between them — bare `Key: value` or bold-keyed `**Key:** value` alike — collapse into ONE paragraph when GitHub renders the doc; the acute case is front-matter (Status/Date/Author as consecutive lines renders as a single run-on paragraph; use a `- **Key:** value` bulleted list), and the same applies to a table or list butted directly against a prose line. Grade the *rendered* shape, not how the source reads in an editor.
+- **3+ correspondences is a table, never an inline list.** Any mapping of 3+ items (operation→cache, type→shape, legacy→new name, column→purpose) is a table. An inline comma-joined enumeration of 3+ things that reads as a table is the tell.
+- **3+ stacked `**Label.**` run-ins is a heading level.** When a section stacks three or more bold run-in labels acting as de-facto subsections, promote them to nested headings at the correct level (`####` under a `###`).
+- **The one manual step is a checklist, not a prose wall.** An operational job's operator procedure, a cutover runbook, a "run this by hand for now" affordance — enumerate the steps; don't bury them in prose.
+
+### Lexical precision
+- **One word, one meaning.** An overloaded in-domain word used in a sense that collides with a *second* in-domain meaning — `schema` (a Postgres namespace *vs* a table's DDL), `cursor` (a connector fetch cursor *vs* a SQL cursor), `config`, `state` — fails unless disambiguated at the point of use. (This is the inverse of the terminology check's one-term-per-concept: that catches two words for one concept; this catches one word for two concepts.)
+- **Say it once, at its strongest place.** A single reassurance or claim repeated 3+ times across one section ("safe because small / public / CDC") — state it once where it lands hardest and cross-reference; don't re-emphasise.
+- **A coined label must be self-explanatory at every use site — defining it once elsewhere does not clear it.** Letter names (`definition A`) and abstract binaries (`bounded` / `unbounded`) fail on each *later* use even when the doc defines them somewhere: the reader who meets the label in section 9 does not re-read section 5. Rename to a plain name that carries its own meaning — `the union definition`, `branch-filtered`. Where the shorthand *is* a real code identifier, do not replace it — lead with the plain name and carry the identifier alongside (`the per-request cache (request memo)`), so the doc stays greppable against the codebase. Keep one definition block for depth. This is the sharper sibling of the writing skill's define-or-drop rule, which only catches a term that is *never* defined; this one fires on the term that is defined and still fails.
+
+### Grounding — a claim is verified against the code, not the doc's own logic
+- **Ownership / wiring claims are grounded.** Any statement about service / DB / package ownership or wiring location ("X owns the DAOs", "Y has no DB of its own", "wired under Z") is verified against the actual DI wiring, data-access code, and package layout *before it is written* — not derived from the design's internal logic. (A design that says "the payments client holds no database access of its own" is false when the *service* that client belongs to owns a database and its data-access code; only the call to the payment provider is storage-agnostic.)
+- **Ground across the relevant scope, not just the local object.** For a schema / type / ownership decision, check it against every sibling that shares the convention — every table in the same DB, every DB that shares the idiom — not only the object in front of you. ("`account_id` is text" is not grounded until you have confirmed *all* the sibling tables in that database key on `account_id` the same way, with the same row-level-security expression.)
+- **Pre-answer the obvious depth question in the Decisions Log.** When a schema/type/ownership decision has an obvious follow-on ("why this type?", "any perf or consistency implication of the RLS cast?", "why not `uuid`?", "no `created_at`?"), answer it in the decision's own rationale row — so neither the reviewer nor the human has to ask. A deliberate divergence from the sibling idiom needs a Decisions Log row.
+
+### Deferred affordances explain themselves
+- **A deferred / unused affordance states its rationale and future-enable path inline.** An empty column populated later, a manual-for-now script, an unused fixture set — say *why it exists now* and *how it gets turned on*, so the reviewer does not have to ask "if this is unpopulated, what is the point?".
+
+## How to use it
+- **Writer (Decision Workflow step 6):** after drafting a section, cold-read it against this bar and fix what fires *now*, before the next section. Ground every claim in the last two groups against the code at the moment you write it.
+- **Reviewer (O2):** cold-read each section range as a fresh agent and grade against this bar; return the fires as findings the author clears before requesting human review.
+- **Section hooks:** the section-specific slices of this bar live as Review hooks in the owning `sections/*.md` (schema-modeling in `lld.md`, growing-table/CDC in `concerns.md`, etc.) — this file is the cross-section readability+grounding layer that sits above them.

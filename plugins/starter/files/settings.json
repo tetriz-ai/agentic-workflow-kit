@@ -1,0 +1,196 @@
+{
+  "base_branch": {
+    "type": "string",
+    "default": "main",
+    "description": "The branch pull requests target and reviews diff against.",
+    "plugins": [
+      "review",
+      "ship",
+      "plan",
+      "queue",
+      "learn"
+    ]
+  },
+  "repo_slug": {
+    "type": "string",
+    "default": "",
+    "description": "owner/name of the GitHub repository. Blank: read from the git remote.",
+    "plugins": [
+      "ship",
+      "queue",
+      "learn"
+    ]
+  },
+  "announce_channel": {
+    "type": "string",
+    "default": "",
+    "description": "Where /ship:pr announces a new pull request (for example a Slack channel name). Blank: no announcement.",
+    "plugins": [
+      "ship"
+    ]
+  },
+  "merge_gate": {
+    "type": "string",
+    "default": "",
+    "description": "A command that must pass before a pull request is merge-ready, or a label that triggers the required check. Blank: the base branch's required GitHub checks.",
+    "plugins": [
+      "ship",
+      "queue"
+    ]
+  },
+  "github_project": {
+    "type": "string",
+    "default": "",
+    "description": "owner/number of a GitHub Project board new issues are added to. Blank: no board.",
+    "plugins": [
+      "ship",
+      "queue"
+    ]
+  },
+  "github_project_version_fallback": {
+    "type": "string",
+    "default": "",
+    "description": "The Version option a new issue gets on the GitHub Project board when no current release can be resolved from recent issues. Blank: Version is left unset.",
+    "plugins": [
+      "ship"
+    ]
+  },
+  "codex_reviewer_login": {
+    "type": "string",
+    "default": "chatgpt-codex-connector",
+    "description": "The GitHub login of the hosted Codex reviewer whose threads /ship:codex-sweep acts on.",
+    "plugins": [
+      "ship"
+    ]
+  },
+  "queue_label": {
+    "type": "string",
+    "default": "ship-queue",
+    "description": "The label that marks issues ready for /queue:ship-queue.",
+    "plugins": [
+      "queue"
+    ]
+  },
+  "logs_metrics": {
+    "type": "string",
+    "default": "",
+    "description": "How /queue:bug-hunt checks production evidence: a command or a short note. Blank: that step is skipped and the finding says so.",
+    "plugins": [
+      "queue"
+    ]
+  },
+  "rfc_dir": {
+    "type": "string",
+    "default": "docs/rfc",
+    "description": "Where design docs (RFCs) live.",
+    "plugins": [
+      "review",
+      "plan"
+    ]
+  },
+  "adr_dir": {
+    "type": "string",
+    "default": "docs/adr",
+    "description": "Where architecture decision records live.",
+    "plugins": [
+      "review",
+      "plan"
+    ]
+  },
+  "team_rules_file": {
+    "type": "string",
+    "default": ".claude/review-rules.md",
+    "description": "The team's review rules, applied by the review panel's team-rules lens. harness-education appends candidate rules here.",
+    "plugins": [
+      "review"
+    ]
+  },
+  "review_cadence_commits": {
+    "type": "number",
+    "default": 5,
+    "description": "Nudge a review panel run after this many commits since the last one.",
+    "plugins": [
+      "review"
+    ]
+  },
+  "review_cadence_lines": {
+    "type": "number",
+    "default": 200,
+    "description": "Nudge a review panel run after this many changed lines since the last one.",
+    "plugins": [
+      "review"
+    ]
+  },
+  "codex_model": {
+    "type": "string",
+    "default": "",
+    "description": "The model the Codex lens asks for. Blank: Codex's own default.",
+    "plugins": [
+      "review"
+    ]
+  },
+  "codex_effort": {
+    "type": "string",
+    "default": "high",
+    "description": "Reasoning effort for the Codex lens (for example low, medium, high).",
+    "plugins": [
+      "review"
+    ]
+  },
+  "claude_model": {
+    "type": "string",
+    "default": "",
+    "description": "The model the Claude lens asks for. Blank: the Claude CLI's own default.",
+    "plugins": [
+      "review"
+    ]
+  },
+  "claude_effort": {
+    "type": "string",
+    "default": "medium",
+    "description": "Effort for the Claude lens (for example low, medium, high).",
+    "plugins": [
+      "review"
+    ]
+  },
+  "ocr_gateways": {
+    "type": "string",
+    "default": "[]",
+    "description": "A JSON array of gateways for the optional open-code-review lens, each {name, url, model, key_env or key_file, extra_body}. [] turns the lens off. User plugin options or environment only; ignored in the repository settings file.",
+    "plugins": [
+      "review"
+    ]
+  },
+  "commit_gate": {
+    "type": "string",
+    "default": "",
+    "description": "A command that must pass before an agent's git commit (run from the repo root with sh -c). Blank: no commit gate.",
+    "plugins": [
+      "guards"
+    ]
+  },
+  "commit_gate_timeout": {
+    "type": "number",
+    "default": 570,
+    "description": "Seconds the commit gate's command, or the lockfile gate's package manager runs together, may take before the commit is blocked as timed out. At most 570, so the stop and the hook's start-up fit in its 600-second timeout; a larger value is used as 570, with a warning.",
+    "plugins": [
+      "guards"
+    ]
+  },
+  "format_command": {
+    "type": "string",
+    "default": "",
+    "description": "The formatter to run on an edited file, with {file} for its path. Blank: detect gofmt or golangci-lint, prettier with a config, ruff or black, rustfmt.",
+    "plugins": [
+      "guards"
+    ]
+  },
+  "architecture_rules_file": {
+    "type": "string",
+    "default": "",
+    "description": "A document of the team's architecture rules for the architecture-rules lens. Blank: that lens is not offered.",
+    "plugins": [
+      "review-lenses"
+    ]
+  }
+}

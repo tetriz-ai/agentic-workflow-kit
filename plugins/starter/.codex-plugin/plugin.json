@@ -1,0 +1,31 @@
+{
+  "name": "starter",
+  "version": "0.1.0",
+  "description": "Set up a repo for the kit: $setup writes the settings file, the deny list, the always-on rules, githooks and the rule index; a short guide maps situations to skills. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+  "author": {
+    "name": "tetriz-ai"
+  },
+  "homepage": "https://github.com/tetriz-ai/agentic-workflow-kit/tree/main/plugins/starter",
+  "repository": "https://github.com/tetriz-ai/agentic-workflow-kit",
+  "license": "MIT",
+  "keywords": [
+    "setup",
+    "onboarding"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Starter",
+    "shortDescription": "Set up the kit",
+    "developerName": "tetriz-ai",
+    "category": "Coding",
+    "defaultPrompt": [
+      "Set up this repo for the kit"
+    ],
+    "websiteURL": "https://github.com/tetriz-ai/agentic-workflow-kit"
+  },
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/setup/SKILL.md"
+    }
+  }
+}

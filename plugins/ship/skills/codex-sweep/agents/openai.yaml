@@ -1,0 +1,6 @@
+interface:
+  display_name: "Codex sweep"
+  short_description: "Fix and reply to Codex review threads"
+  default_prompt: "Use $codex-sweep on this pull request."
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,29 @@
+{
+  "description": "Review cadence nudge before commits, PRs and pushes; self-check nudge after a substantial edit.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/hook-once.sh review-cadence.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/hook-once.sh self-check.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

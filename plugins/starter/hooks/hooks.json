@@ -1,0 +1,17 @@
+{
+  "description": "Load the kit's short guide (which skill fits which situation) at the start of a session.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/session-guide.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "name": "queue",
+  "version": "0.1.0",
+  "description": "Ship work unattended between gates: one task, a whole label queue, or a bug hunt, each fix through the merge gate and the review panel to a pull request. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+  "author": {
+    "name": "tetriz-ai"
+  },
+  "homepage": "https://github.com/tetriz-ai/agentic-workflow-kit/tree/main/plugins/queue",
+  "repository": "https://github.com/tetriz-ai/agentic-workflow-kit",
+  "license": "MIT",
+  "keywords": [
+    "autonomous",
+    "queue",
+    "github-issues"
+  ],
+  "userConfig": {
+    "base_branch": {
+      "type": "string",
+      "title": "Base branch",
+      "description": "The branch pull requests target and reviews diff against.",
+      "default": "main"
+    },
+    "repo_slug": {
+      "type": "string",
+      "title": "Repository",
+      "description": "owner/name of the GitHub repository. Blank: read from the git remote.",
+      "default": ""
+    },
+    "queue_label": {
+      "type": "string",
+      "title": "Queue label",
+      "description": "The label that marks issues ready for /queue:ship-queue.",
+      "default": "ship-queue"
+    },
+    "merge_gate": {
+      "type": "string",
+      "title": "Merge gate",
+      "description": "A command that must pass before a pull request is merge-ready, or a label that triggers the required check. Blank: the base branch's required GitHub checks.",
+      "default": ""
+    },
+    "github_project": {
+      "type": "string",
+      "title": "GitHub Project",
+      "description": "owner/number of a GitHub Project board new issues are added to. Blank: no board.",
+      "default": ""
+    },
+    "logs_metrics": {
+      "type": "string",
+      "title": "Logs and metrics",
+      "description": "How /queue:bug-hunt checks production evidence: a command or a short note. Blank: that step is skipped and the finding says so.",
+      "default": ""
+    }
+  },
+  "dependencies": [
+    "ship",
+    "plan",
+    "review"
+  ]
+}

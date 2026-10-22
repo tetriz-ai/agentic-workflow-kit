@@ -1,0 +1,29 @@
+{
+  "name": "review",
+  "version": "0.1.0",
+  "description": "Review the diff while you code: a panel of focused review lenses, a second-model review (Codex, Claude or open-code-review), and hooks that nudge a review every few commits and after a large edit. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+  "author": {
+    "name": "tetriz-ai"
+  },
+  "homepage": "https://github.com/tetriz-ai/agentic-workflow-kit/tree/main/plugins/review",
+  "repository": "https://github.com/tetriz-ai/agentic-workflow-kit",
+  "license": "MIT",
+  "keywords": [
+    "code-review",
+    "review-panel",
+    "codex",
+    "cross-model"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Review",
+    "shortDescription": "Review panel and lenses",
+    "developerName": "tetriz-ai",
+    "category": "Coding",
+    "defaultPrompt": [
+      "Run the review panel on this branch",
+      "Review this diff with a second model"
+    ],
+    "websiteURL": "https://github.com/tetriz-ai/agentic-workflow-kit"
+  }
+}

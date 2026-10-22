@@ -1,0 +1,22 @@
+{
+  "name": "worktrees",
+  "version": "0.1.0",
+  "description": "Copies local untracked files into each new git worktree and anchors subagents to their worktree, through Claude Code hooks that have no effect on Codex. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+  "author": {
+    "name": "tetriz-ai"
+  },
+  "homepage": "https://github.com/tetriz-ai/agentic-workflow-kit/tree/main/plugins/worktrees",
+  "repository": "https://github.com/tetriz-ai/agentic-workflow-kit",
+  "license": "MIT",
+  "keywords": [
+    "git",
+    "worktrees"
+  ],
+  "interface": {
+    "displayName": "Worktrees",
+    "shortDescription": "Local files in every worktree",
+    "developerName": "tetriz-ai",
+    "category": "Coding",
+    "websiteURL": "https://github.com/tetriz-ai/agentic-workflow-kit"
+  }
+}

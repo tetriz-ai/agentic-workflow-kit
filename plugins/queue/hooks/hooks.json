@@ -1,0 +1,16 @@
+{
+  "description": "Surface the staged session context (the ship-queue snapshot) at session start.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/hook-once.sh session-start-dispatcher.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

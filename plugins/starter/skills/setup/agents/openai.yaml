@@ -1,0 +1,6 @@
+interface:
+  display_name: "Kit setup"
+  short_description: "Set up this repo for the kit"
+  default_prompt: "Use $setup to set up this repository."
+policy:
+  allow_implicit_invocation: false

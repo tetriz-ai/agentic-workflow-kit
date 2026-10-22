@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="200" viewBox="0 0 880 200" role="img" aria-label="agentic-workflow-kit: fresh reviewers every few commits, a second model before every PR, then a reviewed pull request. Skills and hooks for Claude Code and Codex. Install: /plugin marketplace add tetriz-ai/agentic-workflow-kit, then /plugin install all@agentic-workflow-kit. The plan, review, ship and queue plugins form one loop.">
+<rect x="0.5" y="0.5" width="879" height="199" rx="12" fill="#0d1117" stroke="#3d444d" stroke-width="1"/>
+<text x="40" y="66" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="36" font-weight="700" fill="#f0f6fc">agentic-workflow-kit</text>
+<text x="40" y="94" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" fill="#9198a1">Fresh reviewers every few commits,</text>
+<text x="40" y="116" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" fill="#9198a1">a second model before every PR,</text>
+<text x="40" y="138" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" fill="#9198a1">then a reviewed pull request.</text>
+<text x="40" y="164" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#4493f8">/plugin marketplace add tetriz-ai/agentic-workflow-kit</text>
+<text x="40" y="184" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#4493f8">/plugin install all@agentic-workflow-kit</text>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#6e7681"/></marker></defs>
+<line x1="748.7" y1="62.1" x2="793.7" y2="84.1" stroke="#6e7681" stroke-width="2" marker-end="url(#a)"/>
+<line x1="797.3" y1="114.1" x2="752.3" y2="136.1" stroke="#6e7681" stroke-width="2" marker-end="url(#a)"/>
+<line x1="691.3" y1="137.9" x2="646.3" y2="115.9" stroke="#6e7681" stroke-width="2" marker-end="url(#a)"/>
+<line x1="642.7" y1="85.9" x2="687.7" y2="63.9" stroke="#6e7681" stroke-width="2" marker-end="url(#a)"/>
+<rect x="676" y="32" width="88" height="32" rx="16" fill="#0c2d6b" stroke="#4493f8" stroke-width="1.5"/>
+<text x="720" y="53" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#cae8ff">plan</text>
+<rect x="782" y="84" width="88" height="32" rx="16" fill="#0c2d6b" stroke="#4493f8" stroke-width="1.5"/>
+<text x="826" y="105" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#cae8ff">review</text>
+<rect x="676" y="136" width="88" height="32" rx="16" fill="#0c2d6b" stroke="#4493f8" stroke-width="1.5"/>
+<text x="720" y="157" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#cae8ff">ship</text>
+<rect x="570" y="84" width="88" height="32" rx="16" fill="#0c2d6b" stroke="#4493f8" stroke-width="1.5"/>
+<text x="614" y="105" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#cae8ff">queue</text>
+<text x="720" y="104" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#9198a1">one loop</text>
+</svg>

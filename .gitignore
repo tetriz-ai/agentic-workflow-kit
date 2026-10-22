@@ -1,0 +1,12 @@
+# Local state the kit's own hooks write while you work on the kit
+.claude/triage/
+.claude/review-cadence/
+.claude/worktrees/
+.claude/settings.local.json
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~

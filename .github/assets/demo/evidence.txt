@@ -1,0 +1,17 @@
+Captured locally on 2026-10-20. Reproduce it with the commands below.
+
+Reproduction commands (repository root):
+bash examples/mid-feature-review/setup.sh <scratch>
+bash examples/mid-feature-review/checks.sh <scratch>
+# The model finding is the recorded pagination finding already shown in README.md.
+# The illustrated fix is evaluated locally: -(-10 // 3) == 4. No model run or external PR is claimed.
+
+Observed output:
+PASS: the fifth commit since the last panel run gets the cadence nudge
+PASS: the nudge appears once per crossing
+PASS: after the panel resets the cadence, the next commit is quiet
+PASS: gh pr create with unreviewed commits gets the pre-PR nudge
+PASS: an echo that mentions git commit is not a commit
+passed=5 failed=0
+Original floor division: 10 // 3 = 3
+Illustrated ceiling division: -(-10 // 3) = 4

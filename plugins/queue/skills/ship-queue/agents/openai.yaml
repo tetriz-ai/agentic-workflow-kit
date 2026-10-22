@@ -1,0 +1,6 @@
+interface:
+  display_name: "Ship a queue"
+  short_description: "Drain a labelled issue queue to PRs"
+  default_prompt: "Use $ship-queue --list to see the queue."
+policy:
+  allow_implicit_invocation: false

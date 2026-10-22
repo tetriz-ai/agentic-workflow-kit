@@ -1,0 +1,6 @@
+interface:
+  display_name: "Ship a task"
+  short_description: "Ship one issue to a pull request"
+  default_prompt: "Use $ship-task to ship the next issue."
+policy:
+  allow_implicit_invocation: false

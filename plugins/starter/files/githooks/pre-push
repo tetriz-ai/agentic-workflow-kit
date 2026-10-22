@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Copyright 2026 The agentic-workflow-kit Authors
+# SPDX-License-Identifier: MIT
+#
+# git pre-push hook from the agentic-workflow-kit starter. Install it as the repo's
+# pre-push hook (`/starter:setup` offers to).
+#
+# Delegates to the ship plugin's PR-description drift reminder, which prints a stderr
+# nudge when the current branch's open PR body lags the latest commit. SOFT: it never
+# blocks the push; a missing or failing delegate collapses to a clean exit 0.
+#
+# The script is found at AGENTIC_KIT_SHIP_DIR/scripts/pre-push-pr-drift-check.sh when
+# that is set, else in the newest installed copy of this marketplace's ship plugin.
+set -uo pipefail
+
+hook=""
+if [ -n "${AGENTIC_KIT_SHIP_DIR:-}" ]; then
+  hook="$AGENTIC_KIT_SHIP_DIR/scripts/pre-push-pr-drift-check.sh"
+else
+  newest=0
+  for cand in "$HOME"/.claude/plugins/cache/agentic-workflow-kit/ship/*/scripts/pre-push-pr-drift-check.sh; do
+    [ -f "$cand" ] || continue
+    m=$(stat -c %Y "$cand" 2>/dev/null || stat -f %m "$cand" 2>/dev/null || echo 0)
+    if [ "$m" -gt "$newest" ]; then newest="$m"; hook="$cand"; fi
+  done
+fi
+[ -n "$hook" ] && [ -f "$hook" ] || { cat >/dev/null 2>&1 || true; exit 0; }
+exec bash "$hook" "$@"

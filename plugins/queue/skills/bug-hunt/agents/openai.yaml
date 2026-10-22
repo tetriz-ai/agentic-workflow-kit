@@ -1,0 +1,6 @@
+interface:
+  display_name: "Bug hunt"
+  short_description: "Hunt bugs and file grounded issues"
+  default_prompt: "Use $bug-hunt to find bugs in this area."
+policy:
+  allow_implicit_invocation: false

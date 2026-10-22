@@ -1,0 +1,6 @@
+# Codex project configuration from the agentic-workflow-kit bridge.
+#
+# Reuse the existing Claude Code instruction files as the source of truth.
+# Root AGENTS.md is a symlink to CLAUDE.md; nested directories use this fallback.
+project_doc_fallback_filenames = ["CLAUDE.md"]
+project_doc_max_bytes = 98304

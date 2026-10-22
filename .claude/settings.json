@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(scripts/test-all.sh)",
+      "Bash(scripts/check-test-leaks.sh)",
+      "Bash(scripts/run-examples.sh)",
+      "Bash(scripts/check-docs.sh)",
+      "Bash(scripts/sync-shared.sh)",
+      "Bash(scripts/sync-shared.sh --check)",
+      "Bash(scripts/check-codex-plugins.sh)",
+      "Bash(claude plugin validate --strict .)"
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "description": "Anchor subagents to their worktree; copy local untracked files into a new worktree.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Agent|Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/worktree-anchor-subagents.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "EnterWorktree",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/worktree-hydrate-claude.sh",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

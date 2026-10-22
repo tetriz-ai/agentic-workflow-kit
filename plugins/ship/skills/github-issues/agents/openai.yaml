@@ -1,0 +1,6 @@
+interface:
+  display_name: "GitHub issue"
+  short_description: "File a triaged GitHub issue"
+  default_prompt: "Use $github-issues to file an issue for this."
+policy:
+  allow_implicit_invocation: false

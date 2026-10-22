@@ -1,0 +1,162 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  # Weekly, so a new Claude Code or Codex CLI release that breaks the kit shows up without a push.
+  schedule:
+    - cron: "17 3 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GIT_AUTHOR_NAME: ci
+  GIT_AUTHOR_EMAIL: ci@example.com
+  GIT_COMMITTER_NAME: ci
+  GIT_COMMITTER_EMAIL: ci@example.com
+  GIT_CONFIG_NOSYSTEM: "1"
+
+jobs:
+  lint:
+    name: Lint and doc checks
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Pinned shellcheck and yq
+        run: |
+          mkdir -p "$RUNNER_TEMP/bin"
+          curl -fsSL -o "$RUNNER_TEMP/sc.tar.xz" https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.linux.x86_64.tar.xz
+          echo "8c3be12b05d5c177a04c29e3c78ce89ac86f1595681cab149b65b97c4e227198  $RUNNER_TEMP/sc.tar.xz" | sha256sum -c -
+          tar -xJf "$RUNNER_TEMP/sc.tar.xz" -C "$RUNNER_TEMP" && mv "$RUNNER_TEMP/shellcheck-v0.11.0/shellcheck" "$RUNNER_TEMP/bin/"
+          curl -fsSL -o "$RUNNER_TEMP/bin/yq" https://github.com/mikefarah/yq/releases/download/v4.53.6/yq_linux_amd64
+          echo "c5f056448f973ae7d39b5401949648a78f2dc1947d6a8eb65be60d5c504b9385  $RUNNER_TEMP/bin/yq" | sha256sum -c -
+          chmod +x "$RUNNER_TEMP/bin/yq"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+      - name: shellcheck
+        run: |
+          shellcheck --version
+          { find plugins bridge shared scripts examples -type f -name '*.sh'; find plugins/starter/files/githooks -type f; } \
+            | sort | xargs shellcheck -x -S warning
+      - name: Manifests, links, skill references, settings, hooks
+        run: scripts/check-docs.sh
+      - name: Shared libraries match their source
+        run: scripts/sync-shared.sh --check
+
+  identifiers:
+    name: Identifier grep
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: No home paths, private hosts, monorepo paths or session links
+        run: scripts/check-identifiers.sh
+
+  validate:
+    name: claude plugin validate --strict (Claude Code ${{ matrix.claude }})
+    strategy:
+      fail-fast: false
+      matrix:
+        claude: ["2.1.289", "2.1.300"]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+      - run: npm install -g "@anthropic-ai/claude-code@${{ matrix.claude }}"
+      - name: Validate the marketplace and every plugin
+        run: |
+          claude plugin validate --strict .
+          for p in plugins/*/; do claude plugin validate --strict "$p"; done
+
+  codex:
+    name: Codex plugins load (Codex CLI ${{ matrix.codex }})
+    strategy:
+      fail-fast: false
+      matrix:
+        codex: ["0.159.0", "0.162.1"]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+      - run: npm install -g "@openai/codex@${{ matrix.codex }}"
+      - name: Add the marketplace and install every plugin, in a temporary CODEX_HOME
+        run: scripts/check-codex-plugins.sh
+
+  tests:
+    name: Tests (${{ matrix.name }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: bash 3.2, macOS
+            os: macos-latest
+            min_bash: "3.2"
+          - name: bash 5.2, Linux
+            os: ubuntu-24.04
+            min_bash: "5.2"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Put the macOS system bash (3.2) first on PATH
+        if: runner.os == 'macOS'
+        run: |
+          mkdir -p "$RUNNER_TEMP/bash32" && ln -sf /bin/bash "$RUNNER_TEMP/bash32/bash"
+          echo "$RUNNER_TEMP/bash32" >> "$GITHUB_PATH"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+      - name: Tools
+        run: |
+          if [ "$RUNNER_OS" = macOS ]; then
+            yq_asset=yq_darwin_arm64; yq_sha=cceb0b8d71ea5294334121f8429f33f92b920e7217d904a2f9f35443968ac424
+          else
+            yq_asset=yq_linux_amd64; yq_sha=c5f056448f973ae7d39b5401949648a78f2dc1947d6a8eb65be60d5c504b9385
+          fi
+          mkdir -p "$RUNNER_TEMP/bin"
+          curl -fsSL -o "$RUNNER_TEMP/bin/yq" "https://github.com/mikefarah/yq/releases/download/v4.53.6/$yq_asset"
+          echo "$yq_sha  $RUNNER_TEMP/bin/yq" | shasum -a 256 -c -
+          chmod +x "$RUNNER_TEMP/bin/yq"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+          export PATH="$RUNNER_TEMP/bin:$PATH"
+          npm install -g "@openai/codex@0.159.0"
+          jq --version; yq --version; codex --version; bash --version | head -1
+      - name: The bash this leg promises
+        # The bash 5.2 leg exercises codex-lens's `&` handling under patsub_replacement (on by
+        # default from bash 5.2); an older bash would pass that test vacuously, so fail.
+        run: |
+          want="${{ matrix.min_bash }}"
+          bash -c 'printf "%s.%s\n" "${BASH_VERSINFO[0]}" "${BASH_VERSINFO[1]}"' > have
+          have="$(cat have)"
+          if [ "$want" = "5.2" ]; then
+            bash -c '[ "${BASH_VERSINFO[0]}" -gt 5 ] || { [ "${BASH_VERSINFO[0]}" -eq 5 ] && [ "${BASH_VERSINFO[1]}" -ge 2 ]; }' \
+              || { echo "this leg needs bash 5.2 or later, found $have"; exit 1; }
+          else
+            [ "$have" = "$want" ] || { echo "this leg runs the macOS system bash $want, found $have"; exit 1; }
+          fi
+      - name: Every test suite, under a temporary HOME
+        run: |
+          export HOME="$RUNNER_TEMP/home" && mkdir -p "$HOME"
+          scripts/test-all.sh
+      - name: No test leaves temp files behind
+        run: |
+          export HOME="$RUNNER_TEMP/home" && mkdir -p "$HOME"
+          scripts/check-test-leaks.sh
+
+  examples:
+    name: Examples
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Every example's setup.sh then checks.sh
+        run: |
+          export HOME="$RUNNER_TEMP/home" && mkdir -p "$HOME"
+          scripts/run-examples.sh

@@ -1,0 +1,60 @@
+{
+  "name": "ship",
+  "version": "0.1.0",
+  "description": "Open and maintain pull requests: /ship:pr, PR writing style, all-surfaces PR feedback, the Codex review sweep, GitHub issues, and PR-description drift nudges. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+  "author": {
+    "name": "tetriz-ai"
+  },
+  "homepage": "https://github.com/tetriz-ai/agentic-workflow-kit/tree/main/plugins/ship",
+  "repository": "https://github.com/tetriz-ai/agentic-workflow-kit",
+  "license": "MIT",
+  "keywords": [
+    "pull-request",
+    "github",
+    "codex"
+  ],
+  "userConfig": {
+    "base_branch": {
+      "type": "string",
+      "title": "Base branch",
+      "description": "The branch pull requests target and reviews diff against.",
+      "default": "main"
+    },
+    "repo_slug": {
+      "type": "string",
+      "title": "Repository",
+      "description": "owner/name of the GitHub repository. Blank: read from the git remote.",
+      "default": ""
+    },
+    "announce_channel": {
+      "type": "string",
+      "title": "Announce channel",
+      "description": "Where /ship:pr announces a new pull request (for example a Slack channel name). Blank: no announcement.",
+      "default": ""
+    },
+    "merge_gate": {
+      "type": "string",
+      "title": "Merge gate",
+      "description": "A command that must pass before a pull request is merge-ready, or a label that triggers the required check. Blank: the base branch's required GitHub checks.",
+      "default": ""
+    },
+    "github_project": {
+      "type": "string",
+      "title": "GitHub Project",
+      "description": "owner/number of a GitHub Project board new issues are added to. Blank: no board.",
+      "default": ""
+    },
+    "github_project_version_fallback": {
+      "type": "string",
+      "title": "Version fallback",
+      "description": "The Version option a new issue gets on the GitHub Project board when no current release can be resolved from recent issues. Blank: Version is left unset.",
+      "default": ""
+    },
+    "codex_reviewer_login": {
+      "type": "string",
+      "title": "Codex reviewer login",
+      "description": "The GitHub login of the hosted Codex reviewer whose threads /ship:codex-sweep acts on.",
+      "default": "chatgpt-codex-connector"
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "name": "agentic-workflow-kit",
+  "owner": {
+    "name": "tetriz-ai"
+  },
+  "metadata": {
+    "description": "Agent workflow plugins for Claude Code 2.1.289+ and Codex CLI 0.159.0+: review, review-lenses, ship, plan, queue, worktrees, guards, learn, starter.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "review",
+      "source": "./plugins/review",
+      "description": "Review the diff while you code: a panel of focused review lenses, a second-model review (Codex, Claude or open-code-review), and hooks that nudge a review every few commits and after a large edit. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+      "version": "0.1.0",
+      "category": "development"
+    },
+    {
+      "name": "review-lenses",
+      "source": "./plugins/review-lenses",
+      "description": "Opt-in review lenses for the panel, chosen by the files a diff touches: database migrations, multi-tenant isolation, sync cursors, performance, architecture rules. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+      "version": "0.1.0",
+      "category": "development"
+    },
+    {
+      "name": "ship",
+      "source": "./plugins/ship",
+      "description": "Open and maintain pull requests: the pr skill, PR writing style, all-surfaces PR feedback, the Codex review sweep, GitHub issues, and PR-description drift nudges. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+      "version": "0.1.0",
+      "category": "development"
+    },
+    {
+      "name": "plan",
+      "source": "./plugins/plan",
+      "description": "Tech design docs (RFCs) written fork by fork, their review, task breakdowns into shippable slices, and ADRs. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+      "version": "0.1.0",
+      "category": "development"
+    },
+    {
+      "name": "queue",
+      "source": "./plugins/queue",
+      "description": "Ship work unattended between gates: one task, a whole label queue, or a bug hunt, each fix through the merge gate and the review panel to a pull request. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+      "version": "0.1.0",
+      "category": "development"
+    },
+    {
+      "name": "worktrees",
+      "source": "./plugins/worktrees",
+      "description": "Copies local untracked files into each new git worktree and anchors subagents to the worktree they work in. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+      "version": "0.1.0",
+      "category": "development"
+    },
+    {
+      "name": "guards",
+      "source": "./plugins/guards",
+      "description": "Hooks around an agent's commands and edits: a configurable commit gate, a lockfile sync gate, pinned npx, format on edit, and generated-file and doc-health advisories. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+      "version": "0.1.0",
+      "category": "development"
+    },
+    {
+      "name": "learn",
+      "source": "./plugins/learn",
+      "description": "Extracts an abstracted profile of how you work with an agent, scrubbed for credentials, and shares it as a pull request. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+      "version": "0.1.0",
+      "category": "development"
+    },
+    {
+      "name": "starter",
+      "source": "./plugins/starter",
+      "description": "Set up a repo for the kit: the setup skill writes the settings file, the deny list, the always-on rules, githooks and the rule index; a short guide maps situations to skills. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+      "version": "0.1.0",
+      "category": "development"
+    },
+    {
+      "name": "all",
+      "source": "./plugins/all",
+      "description": "Every plugin in one install (cannot be partly switched off). Tested on Claude Code 2.1.289+.",
+      "version": "0.1.0",
+      "category": "development"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+agentic-workflow-kit
+Copyright 2026 Workloom Solutions Private Limited
+
+This repository includes the following third-party material:
+
+- CODE_OF_CONDUCT.md is adapted from the Contributor Covenant, version 2.1,
+  https://www.contributor-covenant.org/version/2/1/code_of_conduct/,
+  licensed under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/.
+
+- plugins/review/skills/codex-lens/codex-lens.prompt.md is the adversarial review prompt
+  from the Codex plugin for Claude Code, https://github.com/openai/codex-plugin-cc
+  (plugins/codex/prompts/adversarial-review.md), Copyright 2026 OpenAI, licensed under
+  the Apache License, Version 2.0. It is used unchanged.
+  plugins/review/skills/codex-lens/codex-lens.schema.json is derived from the same
+  project's plugins/codex/schemas/review-output.schema.json (one added minLength).
+  The license text is in third_party/codex-plugin-cc/LICENSE, and the project's own
+  notice reads: "Copyright 2026 OpenAI".

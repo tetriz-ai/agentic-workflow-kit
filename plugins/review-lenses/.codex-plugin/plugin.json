@@ -1,0 +1,26 @@
+{
+  "name": "review-lenses",
+  "version": "0.1.0",
+  "description": "Opt-in review lenses for the panel, chosen by the files a diff touches: database migrations, multi-tenant isolation, sync cursors, performance, architecture rules. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+  "author": {
+    "name": "tetriz-ai"
+  },
+  "homepage": "https://github.com/tetriz-ai/agentic-workflow-kit/tree/main/plugins/review-lenses",
+  "repository": "https://github.com/tetriz-ai/agentic-workflow-kit",
+  "license": "MIT",
+  "keywords": [
+    "code-review",
+    "lenses"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Review Lenses",
+    "shortDescription": "Extra review lenses",
+    "developerName": "tetriz-ai",
+    "category": "Coding",
+    "defaultPrompt": [
+      "Which review lenses apply to this diff?"
+    ],
+    "websiteURL": "https://github.com/tetriz-ai/agentic-workflow-kit"
+  }
+}

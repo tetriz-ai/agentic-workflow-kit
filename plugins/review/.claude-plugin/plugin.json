@@ -1,0 +1,85 @@
+{
+  "name": "review",
+  "version": "0.1.0",
+  "description": "Review the diff while you code: a panel of focused review lenses, a second-model review (Codex, Claude or open-code-review), and hooks that nudge a review every few commits and after a large edit. Tested on Claude Code 2.1.289+ and Codex CLI 0.159.0+.",
+  "author": {
+    "name": "tetriz-ai"
+  },
+  "homepage": "https://github.com/tetriz-ai/agentic-workflow-kit/tree/main/plugins/review",
+  "repository": "https://github.com/tetriz-ai/agentic-workflow-kit",
+  "license": "MIT",
+  "keywords": [
+    "code-review",
+    "review-panel",
+    "codex",
+    "cross-model"
+  ],
+  "userConfig": {
+    "base_branch": {
+      "type": "string",
+      "title": "Base branch",
+      "description": "The branch pull requests target and reviews diff against.",
+      "default": "main"
+    },
+    "rfc_dir": {
+      "type": "string",
+      "title": "Design doc folder",
+      "description": "Where design docs (RFCs) live.",
+      "default": "docs/rfc"
+    },
+    "adr_dir": {
+      "type": "string",
+      "title": "ADR folder",
+      "description": "Where architecture decision records live.",
+      "default": "docs/adr"
+    },
+    "team_rules_file": {
+      "type": "string",
+      "title": "Team rules file",
+      "description": "The team's review rules, applied by the review panel's team-rules lens. harness-education appends candidate rules here.",
+      "default": ".claude/review-rules.md"
+    },
+    "review_cadence_commits": {
+      "type": "number",
+      "title": "Review cadence: commits",
+      "description": "Nudge a review panel run after this many commits since the last one.",
+      "default": 5
+    },
+    "review_cadence_lines": {
+      "type": "number",
+      "title": "Review cadence: lines",
+      "description": "Nudge a review panel run after this many changed lines since the last one.",
+      "default": 200
+    },
+    "codex_model": {
+      "type": "string",
+      "title": "Codex lens model",
+      "description": "The model the Codex lens asks for. Blank: Codex's own default.",
+      "default": ""
+    },
+    "codex_effort": {
+      "type": "string",
+      "title": "Codex lens effort",
+      "description": "Reasoning effort for the Codex lens (for example low, medium, high).",
+      "default": "high"
+    },
+    "claude_model": {
+      "type": "string",
+      "title": "Claude lens model",
+      "description": "The model the Claude lens asks for. Blank: the Claude CLI's own default.",
+      "default": ""
+    },
+    "claude_effort": {
+      "type": "string",
+      "title": "Claude lens effort",
+      "description": "Effort for the Claude lens (for example low, medium, high).",
+      "default": "medium"
+    },
+    "ocr_gateways": {
+      "type": "string",
+      "title": "OCR gateways",
+      "description": "A JSON array of gateways for the optional open-code-review lens, each {name, url, model, key_env or key_file, extra_body}. [] turns the lens off. User plugin options or environment only; ignored in the repository settings file.",
+      "default": "[]"
+    }
+  }
+}
